@@ -8,6 +8,15 @@ function App() {
   const center: [number, number] = [20.47634, -98.67460]
   const [geoJsonData, setGeoJsonData] = useState<any>(null)
 
+  // Color mapping for each municipality
+  const municipalityColors: { [key: string]: string } = {
+    "Atotonilco el Grande": "#FF5733",      // Orange-red
+    "Eloxochitlán": "#33FF57",              // Green
+    "San Agustín Metzquititlán": "#3357FF", // Blue
+    "Metztitlán": "#FF33F5",                // Magenta
+    "Tulancingo de Bravo": "#FFD700"        // Gold
+  }
+
   // Load GeoJSON file
   useEffect(() => {
     fetch('/data/hgomunicipal.geojson')
@@ -99,11 +108,15 @@ function App() {
         {geoJsonData && (
           <GeoJSON
             data={geoJsonData}
-            style={{
-              fillColor: '#bc955c',
-              fillOpacity: 0.2,
-              color: '#bc955c',
-              weight: 2
+            style={(feature) => {
+              const municipalityName = feature?.properties?.NOMBRE || ''
+              const color = municipalityColors[municipalityName] || '#bc955c'
+              return {
+                fillColor: color,
+                fillOpacity: 0.2,
+                color: color,
+                weight: 2
+              }
             }}
             onEachFeature={(feature, layer) => {
               if (feature.properties) {
