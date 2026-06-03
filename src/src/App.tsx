@@ -1,20 +1,61 @@
 import { useState, useEffect } from 'react'
-import { MapContainer, TileLayer, CircleMarker, Polygon, Popup, GeoJSON } from 'react-leaflet'
+import L from 'leaflet'
+import { MapContainer, TileLayer, CircleMarker, Polygon, Popup, GeoJSON, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import './App.css'
+
+type Location = {
+  id: number
+  position: [number, number]
+  title: string
+  description: string
+  color: string
+  area: [number, number][]
+}
+
+function MapViewportController({ targetLocation }: { targetLocation: Location | null }) {
+  const map = useMap()
+
+  useEffect(() => {
+    if (!targetLocation) {
+      return
+    }
+
+    map.flyToBounds(L.latLngBounds(targetLocation.area), {
+      padding: [40, 40],
+      maxZoom: 12,
+      duration: 0.8
+    })
+  }, [map, targetLocation])
+
+  return null
+}
 
 function App() {
   // Map center position
   const center: [number, number] = [20.47634, -98.67460]
   const [geoJsonData, setGeoJsonData] = useState<any>(null)
+  const [selectedMunicipalityId, setSelectedMunicipalityId] = useState<number | null>(null)
+  const profileCards = [
+    { id: 1, firstName: 'Miranda', lastName: 'Espinoza' },
+    { id: 2, firstName: 'Aurora', lastName: 'Campos' },
+    { id: 3, firstName: 'Aimé', lastName: 'Yañez' },
+    { id: 4, firstName: 'Alejandro', lastName: 'Cerón' }
+  ]
+  const municipalityCards = [
+    { id: 1, name: 'Eloxochitlán', locationId: 2 },
+    { id: 2, name: 'San Agustín Metzquititlán', locationId: 3 },
+    { id: 3, name: 'Meztitlan', locationId: 4 },
+    { id: 4, name: 'Atotonilco El Grande', locationId: 1 }
+  ]
 
   // Color mapping for each municipality
   const municipalityColors: { [key: string]: string } = {
     "Atotonilco el Grande": "#FF5733",      // Orange-red
-    "Eloxochitlán": "#33FF57",              // Green
+    "Eloxochitlán": "#008504",              // Green
     "San Agustín Metzquititlán": "#3357FF", // Blue
     "Metztitlán": "#FF33F5",                // Magenta
-    "Tulancingo de Bravo": "#FFD700"        // Gold
+    "Tulancingo de Bravo": "#6f00ff"        // Gold
   }
 
   // Load GeoJSON file
@@ -28,7 +69,7 @@ function App() {
       .catch(err => console.error('Error loading GeoJSON:', err))
   }, [])
   
-  const locations = [
+  const locations: Location[] = [
     { 
       id: 1, 
       position: [20.28646, -98.66962] as [number, number], 
@@ -96,9 +137,43 @@ function App() {
     },
   ]
 
+  const selectedLocation =
+    selectedMunicipalityId === null
+      ? null
+      : locations.find((location) => location.id === selectedMunicipalityId) ?? null
+
   return (
     <div className="fullscreen-map">
-      <MapContainer center={center} zoom={13} scrollWheelZoom={true}>
+      <div className="profile-cards-overlay">
+        {profileCards.map((profile) => (
+          <article key={profile.id} className="profile-card">
+            <div className="profile-avatar" aria-hidden="true">
+              <span className="avatar-head" />
+              <span className="avatar-body" />
+            </div>
+            <div className="profile-name">
+              <span>{profile.firstName}</span>
+              <span>{profile.lastName}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="municipality-cards-overlay">
+        {municipalityCards.map((municipality) => (
+          <button
+            key={municipality.id}
+            type="button"
+            className={`municipality-card${selectedMunicipalityId === municipality.locationId ? ' is-active' : ''}`}
+            onClick={() => setSelectedMunicipalityId(municipality.locationId)}
+          >
+            <span className="municipality-label">{municipality.name}</span>
+          </button>
+        ))}
+      </div>
+
+      <MapContainer center={center} zoom={11} scrollWheelZoom={true}>
+        <MapViewportController targetLocation={selectedLocation} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

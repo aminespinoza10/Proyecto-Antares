@@ -47,9 +47,183 @@
   height: 100vh;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .fullscreen-map .leaflet-container {
   height: 100%;
   width: 100%;
+}
+
+.profile-cards-overlay {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 300px;
+}
+
+.municipality-cards-overlay {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 300px;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 80px;
+  box-sizing: border-box;
+  gap: 11px;
+  padding: 8px 12px;
+  border-radius: 17px;
+  border: 2px solid #2deb73;
+  background: #120a78;
+  color: #f4f7ff;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(45, 235, 115, 0.25);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 220ms ease, background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.profile-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #d8deec;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar-head {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #9ca4b5;
+}
+
+.avatar-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 31px;
+  height: 20px;
+  border-radius: 20px 20px 0 0;
+  background: #9ca4b5;
+}
+
+.profile-name {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+.municipality-card {
+  appearance: none;
+  -webkit-appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 80px;
+  font: inherit;
+  box-sizing: border-box;
+  padding: 8px 14px;
+  border-radius: 17px;
+  border: 2px solid #2deb73;
+  background: #120a78;
+  color: #f4f7ff;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(45, 235, 115, 0.25);
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 220ms ease, background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.municipality-card.is-active {
+  background: #1c1094;
+  border-color: #50f191;
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.52), 0 8px 18px rgba(80, 241, 145, 0.38);
+}
+
+.profile-card:hover,
+.municipality-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  background: #1c1094;
+  border-color: #50f191;
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.52), 0 8px 18px rgba(80, 241, 145, 0.38);
+}
+
+.profile-card:focus-visible,
+.municipality-card:focus-visible {
+  outline: 2px solid #9effc4;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-card,
+  .municipality-card {
+    transition: none;
+  }
+}
+
+.municipality-label {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .profile-card {
+    width: 300px;
+    height: 80px;
+    padding: 6px 10px;
+    border-width: 2px;
+    border-radius: 14px;
+  }
+
+  .profile-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .avatar-head {
+    width: 15px;
+    height: 15px;
+    top: 7px;
+  }
+
+  .avatar-body {
+    width: 26px;
+    height: 16px;
+  }
+
+  .municipality-card {
+    width: 300px;
+    height: 80px;
+    padding: 6px 10px;
+    border-width: 2px;
+    border-radius: 14px;
+  }
 }
