@@ -198,25 +198,25 @@
     ]
   },
   "packageFolders": {
-    "/home/aminespinoza/.nuget/packages/": {}
+    "/Users/aminespinoza/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/aminespinoza/Documents/github/Proyecto-Antares/spikes/spikes.csproj",
+      "projectUniqueName": "/Users/aminespinoza/Documents/Github/Proyecto-Antares/spikes/spikes.csproj",
       "projectName": "spikes",
-      "projectPath": "/home/aminespinoza/Documents/github/Proyecto-Antares/spikes/spikes.csproj",
-      "packagesPath": "/home/aminespinoza/.nuget/packages/",
-      "outputPath": "/home/aminespinoza/Documents/github/Proyecto-Antares/spikes/obj/",
+      "projectPath": "/Users/aminespinoza/Documents/Github/Proyecto-Antares/spikes/spikes.csproj",
+      "packagesPath": "/Users/aminespinoza/.nuget/packages/",
+      "outputPath": "/Users/aminespinoza/Documents/Github/Proyecto-Antares/spikes/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/aminespinoza/.nuget/NuGet/NuGet.Config"
+        "/Users/aminespinoza/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
       ],
       "sources": {
-        "/usr/lib/dotnet/library-packs": {},
+        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -235,7 +235,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -262,7 +262,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/9.0.117/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

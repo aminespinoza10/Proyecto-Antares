@@ -1,14 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "ucWZF/xCL/4=",
+  "dgSpecHash": "+nkUBJnAWPs=",
   "success": true,
-  "projectFilePath": "/home/aminespinoza/Documents/github/Proyecto-Antares/spikes/spikes.csproj",
+  "projectFilePath": "/Users/aminespinoza/Documents/Github/Proyecto-Antares/spikes/spikes.csproj",
   "expectedPackageFiles": [
-    "/home/aminespinoza/.nuget/packages/metadataextractor/2.8.1/metadataextractor.2.8.1.nupkg.sha512",
-    "/home/aminespinoza/.nuget/packages/microsoft.netcore.platforms/2.1.2/microsoft.netcore.platforms.2.1.2.nupkg.sha512",
-    "/home/aminespinoza/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.2/system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
-    "/home/aminespinoza/.nuget/packages/system.text.encoding.codepages/4.5.1/system.text.encoding.codepages.4.5.1.nupkg.sha512",
-    "/home/aminespinoza/.nuget/packages/xmpcore/6.1.10.1/xmpcore.6.1.10.1.nupkg.sha512"
+    "/Users/aminespinoza/.nuget/packages/metadataextractor/2.8.1/metadataextractor.2.8.1.nupkg.sha512",
+    "/Users/aminespinoza/.nuget/packages/microsoft.netcore.platforms/2.1.2/microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "/Users/aminespinoza/.nuget/packages/system.runtime.compilerservices.unsafe/4.5.2/system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "/Users/aminespinoza/.nuget/packages/system.text.encoding.codepages/4.5.1/system.text.encoding.codepages.4.5.1.nupkg.sha512",
+    "/Users/aminespinoza/.nuget/packages/xmpcore/6.1.10.1/xmpcore.6.1.10.1.nupkg.sha512"
   ],
   "logs": []
 }

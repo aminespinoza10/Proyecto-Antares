@@ -38,6 +38,7 @@ function App() {
   const [selectedMunicipalityId, setSelectedMunicipalityId] = useState<number | null>(null)
   const [showProfiles, setShowProfiles] = useState(true)
   const [showMunicipalities, setShowMunicipalities] = useState(true)
+  const [showBottomPanel, setShowBottomPanel] = useState(false)
   const profileCards = [
     { id: 1, firstName: 'Miranda', lastName: 'Espinoza' },
     { id: 2, firstName: 'Aurora', lastName: 'Campos' },
@@ -146,6 +147,15 @@ function App() {
 
   return (
     <div className="fullscreen-map">
+      <div className="logo-overlay">
+        <div className="logo-badge">
+          <img className="map-logo" src="/img/logo.svg" alt="" />
+        </div>
+        <button type="button" className="logo-action-button">
+          introducción
+        </button>
+      </div>
+
       <div className={`profile-cards-overlay${showProfiles ? '' : ' is-collapsed'}`}>
         <button
           type="button"
@@ -239,6 +249,26 @@ function App() {
 
 
       </MapContainer>
+
+      <section className={`bottom-map-panel${showBottomPanel ? ' is-open' : ' is-collapsed'}`}>
+        <div className="bottom-map-panel-bar" aria-hidden="true" />
+
+        <button
+          type="button"
+          className="bottom-map-panel-toggle"
+          onClick={() => setShowBottomPanel((current) => !current)}
+          aria-expanded={showBottomPanel}
+          aria-label={showBottomPanel ? 'Ocultar panel inferior' : 'Mostrar panel inferior'}
+        >
+          <span className={`bottom-map-panel-icon${showBottomPanel ? ' is-open' : ''}`} aria-hidden="true">
+            ▲
+          </span>
+        </button>
+
+        <div className={`bottom-map-panel-content${showBottomPanel ? ' is-open' : ' is-hidden'}`} aria-hidden={!showBottomPanel}>
+          <div className="bottom-map-panel-inner" />
+        </div>
+      </section>
     </div>
   )
 }
