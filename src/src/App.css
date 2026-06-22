@@ -58,31 +58,150 @@
 .profile-cards-overlay {
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 8px;
   transform: translateY(-50%);
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  width: 300px;
+  gap: 10px;
+  width: 266px;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 18px;
+  background: rgba(9, 8, 62, 0.38);
+  border: 1px solid rgba(80, 241, 145, 0.25);
+  backdrop-filter: blur(4px);
+  transition: width 280ms ease, padding 220ms ease, background-color 220ms ease,
+    border-color 220ms ease;
 }
 
 .municipality-cards-overlay {
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 8px;
   transform: translateY(-50%);
   z-index: 1000;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  width: 266px;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 18px;
+  background: rgba(9, 8, 62, 0.38);
+  border: 1px solid rgba(80, 241, 145, 0.25);
+  backdrop-filter: blur(4px);
+  transition: width 280ms ease, padding 220ms ease, background-color 220ms ease,
+    border-color 220ms ease;
+}
+
+.profile-cards-overlay.is-collapsed,
+.municipality-cards-overlay.is-collapsed {
+  width: auto;
+  padding: 6px;
+}
+
+.overlay-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid rgba(80, 241, 145, 0.55);
+  background: rgba(14, 12, 110, 0.9);
+  color: #eaf3ff;
+  font: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.overlay-toggle-right {
+  text-align: left;
+}
+
+.overlay-toggle-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  color: #b7ffcf;
+  transform: rotate(-90deg);
+  transition: transform 240ms ease, color 200ms ease;
+}
+
+.overlay-toggle-icon.is-open {
+  transform: rotate(0deg);
+}
+
+.overlay-toggle:hover {
+  background: rgba(27, 20, 160, 0.95);
+  border-color: #7dffb3;
+  transform: translateY(-2px);
+}
+
+.overlay-toggle:hover .overlay-toggle-icon {
+  color: #ebfff3;
+}
+
+.overlay-toggle:focus-visible {
+  outline: 2px solid #9effc4;
+  outline-offset: 3px;
+}
+
+.overlay-cards {
+  display: flex;
+  flex-direction: column;
   gap: 14px;
-  width: 300px;
+  max-height: 600px;
+  opacity: 1;
+  transform: translateY(0);
+  overflow: hidden;
+  transition: max-height 360ms cubic-bezier(0.33, 1, 0.68, 1), opacity 240ms ease,
+    transform 280ms ease;
+}
+
+.overlay-cards > * {
+  transition: opacity 220ms ease, transform 260ms ease;
+}
+
+.overlay-cards.is-open > *:nth-child(1) {
+  transition-delay: 30ms;
+}
+
+.overlay-cards.is-open > *:nth-child(2) {
+  transition-delay: 65ms;
+}
+
+.overlay-cards.is-open > *:nth-child(3) {
+  transition-delay: 100ms;
+}
+
+.overlay-cards.is-open > *:nth-child(4) {
+  transition-delay: 135ms;
+}
+
+.overlay-cards.is-hidden {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.overlay-cards.is-hidden > * {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
 }
 
 .profile-card {
   display: flex;
   align-items: center;
-  width: 300px;
+  width: 100%;
   height: 80px;
   box-sizing: border-box;
   gap: 11px;
@@ -143,7 +262,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
+  width: 100%;
   height: 80px;
   font: inherit;
   box-sizing: border-box;
@@ -179,6 +298,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .profile-cards-overlay,
+  .municipality-cards-overlay,
+  .overlay-toggle,
+  .overlay-toggle-icon,
+  .overlay-cards,
+  .overlay-cards > *,
   .profile-card,
   .municipality-card {
     transition: none;
@@ -195,8 +320,14 @@
 }
 
 @media (max-width: 700px) {
+  .profile-cards-overlay,
+  .municipality-cards-overlay {
+    width: 266px;
+    padding: 6px;
+  }
+
   .profile-card {
-    width: 300px;
+    width: 100%;
     height: 80px;
     padding: 6px 10px;
     border-width: 2px;
@@ -220,7 +351,7 @@
   }
 
   .municipality-card {
-    width: 300px;
+    width: 100%;
     height: 80px;
     padding: 6px 10px;
     border-width: 2px;

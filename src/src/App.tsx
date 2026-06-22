@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import L from 'leaflet'
-import { MapContainer, TileLayer, CircleMarker, Polygon, Popup, GeoJSON, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import './App.css'
 
@@ -36,6 +36,8 @@ function App() {
   const center: [number, number] = [20.47634, -98.67460]
   const [geoJsonData, setGeoJsonData] = useState<any>(null)
   const [selectedMunicipalityId, setSelectedMunicipalityId] = useState<number | null>(null)
+  const [showProfiles, setShowProfiles] = useState(true)
+  const [showMunicipalities, setShowMunicipalities] = useState(true)
   const profileCards = [
     { id: 1, firstName: 'Miranda', lastName: 'Espinoza' },
     { id: 2, firstName: 'Aurora', lastName: 'Campos' },
@@ -144,32 +146,61 @@ function App() {
 
   return (
     <div className="fullscreen-map">
-      <div className="profile-cards-overlay">
-        {profileCards.map((profile) => (
-          <article key={profile.id} className="profile-card">
-            <div className="profile-avatar" aria-hidden="true">
-              <span className="avatar-head" />
-              <span className="avatar-body" />
-            </div>
-            <div className="profile-name">
-              <span>{profile.firstName}</span>
-              <span>{profile.lastName}</span>
-            </div>
-          </article>
-        ))}
+      <div className={`profile-cards-overlay${showProfiles ? '' : ' is-collapsed'}`}>
+        <button
+          type="button"
+          className="overlay-toggle"
+          onClick={() => setShowProfiles((current) => !current)}
+          aria-expanded={showProfiles}
+        >
+          <span>{showProfiles ? 'Esconder equipo' : 'Mostrar equipo'}</span>
+          <span className={`overlay-toggle-icon${showProfiles ? ' is-open' : ''}`} aria-hidden="true">
+            v
+          </span>
+        </button>
+
+        <div className={`overlay-cards${showProfiles ? ' is-open' : ' is-hidden'}`} aria-hidden={!showProfiles}>
+          {profileCards.map((profile) => (
+            <article key={profile.id} className="profile-card">
+              <div className="profile-avatar" aria-hidden="true">
+                <span className="avatar-head" />
+                <span className="avatar-body" />
+              </div>
+              <div className="profile-name">
+                <span>{profile.firstName}</span>
+                <span>{profile.lastName}</span>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
 
-      <div className="municipality-cards-overlay">
-        {municipalityCards.map((municipality) => (
-          <button
-            key={municipality.id}
-            type="button"
-            className={`municipality-card${selectedMunicipalityId === municipality.locationId ? ' is-active' : ''}`}
-            onClick={() => setSelectedMunicipalityId(municipality.locationId)}
-          >
-            <span className="municipality-label">{municipality.name}</span>
-          </button>
-        ))}
+      <div className={`municipality-cards-overlay${showMunicipalities ? '' : ' is-collapsed'}`}>
+        <button
+          type="button"
+          className="overlay-toggle overlay-toggle-right"
+          onClick={() => setShowMunicipalities((current) => !current)}
+          aria-expanded={showMunicipalities}
+        >
+          <span>{showMunicipalities ? 'Esconder municipios' : 'Mostrar municipios'}</span>
+          <span className={`overlay-toggle-icon${showMunicipalities ? ' is-open' : ''}`} aria-hidden="true">
+            v
+          </span>
+        </button>
+
+        <div className={`overlay-cards${showMunicipalities ? ' is-open' : ' is-hidden'}`} aria-hidden={!showMunicipalities}>
+          {municipalityCards.map((municipality) => (
+            <button
+              key={municipality.id}
+              type="button"
+              className={`municipality-card${selectedMunicipalityId === municipality.locationId ? ' is-active' : ''}`}
+              onClick={() => setSelectedMunicipalityId(municipality.locationId)}
+              tabIndex={showMunicipalities ? 0 : -1}
+            >
+              <span className="municipality-label">{municipality.name}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <MapContainer center={center} zoom={11} scrollWheelZoom={true}>
@@ -179,7 +210,6 @@ function App() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {/* Municipal boundaries from GeoJSON */}
         {geoJsonData && (
           <GeoJSON
             data={geoJsonData}
@@ -207,44 +237,7 @@ function App() {
           />
         )}
 
-        {locations.map((location) => (
-          <div key={location.id}>
-            {/* Highlighted area */}
-            <Polygon
-              positions={location.area}
-              pathOptions={{
-                fillColor: location.color,
-                fillOpacity: 0.3,
-                color: location.color,
-                weight: 2
-              }}
-            >
-              <Popup>
-                <strong>{location.title}</strong>
-                <br />
-                {location.description}
-              </Popup>
-            </Polygon>
-            
-            {/* Marker pin */}
-            <CircleMarker 
-              center={location.position}
-              pathOptions={{ 
-                fillColor: location.color, 
-                color: location.color, 
-                fillOpacity: 0.8,
-                weight: 2
-              }}
-              radius={10}
-            >
-              <Popup>
-                <strong>{location.title}</strong>
-                <br />
-                {location.description}
-              </Popup>
-            </CircleMarker>
-          </div>
-        ))}
+
       </MapContainer>
     </div>
   )
