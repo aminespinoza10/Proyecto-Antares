@@ -33,4 +33,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           local-dir: src/dist/
-          server-dir: /public_html/antares
+          server-dir: /public_html/antares/
