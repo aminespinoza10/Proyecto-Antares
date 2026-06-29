@@ -32,6 +32,8 @@ function MapViewportController({ targetLocation }: { targetLocation: Location | 
 }
 
 function App() {
+  const getAssetPath = (relativePath: string) => `${import.meta.env.BASE_URL}${relativePath.replace(/^\//, '')}`
+
   // Map center position
   const center: [number, number] = [20.47634, -98.67460]
   const [geoJsonData, setGeoJsonData] = useState<any>(null)
@@ -40,10 +42,10 @@ function App() {
   const [showMunicipalities, setShowMunicipalities] = useState(true)
   const [showBottomPanel, setShowBottomPanel] = useState(false)
   const profileCards = [
-    { id: 1, firstName: 'Miranda', lastName: 'Espinoza' },
-    { id: 2, firstName: 'Aurora', lastName: 'Campos' },
-    { id: 3, firstName: 'Aimé', lastName: 'Yañez' },
-    { id: 4, firstName: 'Alejandro', lastName: 'Cerón' }
+    { id: 1, firstName: 'Miranda', lastName: 'Espinoza', image: 'img/Miranda.png' },
+    { id: 2, firstName: 'Aurora', lastName: 'Campos', image: 'img/Aurora.png' },
+    { id: 3, firstName: 'Aimé', lastName: 'Yañez', image: 'img/Aime.png' },
+    { id: 4, firstName: 'Alejandro', lastName: 'Cerón', image: 'img/Alejandro.png' }
   ]
   const municipalityCards = [
     { id: 1, name: 'Eloxochitlán', locationId: 2 },
@@ -63,7 +65,7 @@ function App() {
 
   // Load GeoJSON file
   useEffect(() => {
-    fetch('/data/hgomunicipal.geojson')
+    fetch(getAssetPath('data/hgomunicipal.geojson'))
       .then(res => res.json())
       .then(data => {
         console.log('GeoJSON loaded:', data)
@@ -149,7 +151,7 @@ function App() {
     <div className="fullscreen-map">
       <div className="logo-overlay">
         <div className="logo-badge">
-          <img className="map-logo" src="/img/logo.svg" alt="" />
+          <img className="map-logo" src={getAssetPath('img/logo.svg')} alt="" />
         </div>
         <button type="button" className="logo-action-button">
           introducción
@@ -173,8 +175,11 @@ function App() {
           {profileCards.map((profile) => (
             <article key={profile.id} className="profile-card">
               <div className="profile-avatar" aria-hidden="true">
-                <span className="avatar-head" />
-                <span className="avatar-body" />
+                <img
+                  className="profile-avatar-image"
+                  src={getAssetPath(profile.image)}
+                  alt={`${profile.firstName} ${profile.lastName}`}
+                />
               </div>
               <div className="profile-name">
                 <span>{profile.firstName}</span>
@@ -237,9 +242,11 @@ function App() {
               if (feature.properties) {
                 const props = feature.properties
                 const popupContent = `
-                  <strong>${props.NOMGEO || props.name || 'Municipality'}</strong><br/>
-                  ${props.CVE_MUN ? `CVE: ${props.CVE_MUN}<br/>` : ''}
-                  ${props.CVE_ENT ? `State: ${props.CVE_ENT}` : ''}
+                  <strong>${props.NOMBRE || props.NOMGEO || props.name || 'Municipality'}</strong><br/>
+                  ${props.CVEGEO ? `CVEGEO: ${props.CVEGEO}<br/>` : ''}
+                  ${props.NOM_ENT ? `Estado: ${props.NOM_ENT}<br/>` : ''}
+                  ${props.CVE_MUN ? `CVE MUN: ${props.CVE_MUN}<br/>` : ''}
+                  ${props.CVE_ENT ? `CVE ENT: ${props.CVE_ENT}` : ''}
                 `
                 layer.bindPopup(popupContent)
               }
