@@ -33,6 +33,7 @@ function MapViewportController({ targetLocation }: { targetLocation: Location | 
 
 function App() {
   const getAssetPath = (relativePath: string) => `${import.meta.env.BASE_URL}${relativePath.replace(/^\//, '')}`
+  const introductionVideoUrl = 'https://www.youtube.com/embed/A3A2_8-022k'
 
   // Map center position
   const center: [number, number] = [20.47634, -98.67460]
@@ -153,7 +154,13 @@ function App() {
         <div className="logo-badge">
           <img className="map-logo" src={getAssetPath('img/logo.svg')} alt="" />
         </div>
-        <button type="button" className="logo-action-button">
+        <button
+          type="button"
+          className="logo-action-button"
+          onClick={() => setShowBottomPanel(true)}
+          aria-controls="bottom-introduction-panel"
+          aria-expanded={showBottomPanel}
+        >
           introducción
         </button>
       </div>
@@ -257,7 +264,7 @@ function App() {
 
       </MapContainer>
 
-      <section className={`bottom-map-panel${showBottomPanel ? ' is-open' : ' is-collapsed'}`}>
+      <section id="bottom-introduction-panel" className={`bottom-map-panel${showBottomPanel ? ' is-open' : ' is-collapsed'}`}>
         <div className="bottom-map-panel-bar" aria-hidden="true" />
 
         <button
@@ -273,7 +280,22 @@ function App() {
         </button>
 
         <div className={`bottom-map-panel-content${showBottomPanel ? ' is-open' : ' is-hidden'}`} aria-hidden={!showBottomPanel}>
-          <div className="bottom-map-panel-inner" />
+          <div className="bottom-map-panel-inner">
+            <section className="introduction-content" aria-label="Introduccion">
+              <h2 className="introduction-title">Nuestro viaje a la Sierra Baja de Hidalgo</h2>
+              <div className="introduction-video-shell">
+                <iframe
+                  className="introduction-video"
+                  src={introductionVideoUrl}
+                  title="Nuestro viaje a la Sierra Baja de Hidalgo"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                />
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </div>
