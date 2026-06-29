@@ -3,7 +3,8 @@ name: Deploy Web App
 on:
   push:
     branches: [ "main" ]
-
+    
+# inicio de actividades
 jobs:
   deploy:
     runs-on: ubuntu-latest
