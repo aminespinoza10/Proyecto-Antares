@@ -117,6 +117,55 @@
   width: 100%;
 }
 
+.leaflet-marker-icon.marker-red {
+  filter: hue-rotate(0deg) saturate(1.4) brightness(1);
+}
+
+.leaflet-marker-icon.marker-blue {
+  filter: hue-rotate(180deg) saturate(1.45) brightness(0.95);
+}
+
+.leaflet-marker-icon.marker-green {
+  filter: hue-rotate(95deg) saturate(1.55) brightness(0.95);
+}
+
+.leaflet-marker-icon.marker-orange {
+  filter: hue-rotate(330deg) saturate(1.8) brightness(1.05);
+}
+
+.marker-popup {
+  width: min(76vw, 280px);
+}
+
+.marker-popup-title {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.marker-popup-text {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+}
+
+.marker-popup-media {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #0f172a;
+  margin-bottom: 8px;
+}
+
+.marker-popup-link {
+  color: #120a78;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 .bottom-map-panel {
   position: absolute;
   left: 0;
@@ -466,6 +515,12 @@
 }
 
 .municipality-card.is-active {
+  background: #1c1094;
+  border-color: #50f191;
+  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.52), 0 8px 18px rgba(80, 241, 145, 0.38);
+}
+
+.profile-card.is-active {
   background: #1c1094;
   border-color: #50f191;
   box-shadow: 0 24px 44px rgba(0, 0, 0, 0.52), 0 8px 18px rgba(80, 241, 145, 0.38);
